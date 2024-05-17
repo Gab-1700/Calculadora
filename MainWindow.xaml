@@ -26,31 +26,31 @@
 
         </Grid.ColumnDefinitions>
 
-
-        <StackPanel  Grid.Row="0" Grid.Column="0" Margin ="0 0 5 0" Grid.ColumnSpan="5" >
-            <Label Name="Historial" Content="↻" />
-             <Label Name="Resultado" Content="14"/>
-
-        </StackPanel>
-
-        <Button Grid.Row="1" Grid.Column="0" Margin ="0 0 5 0" FontSize="30" Content="√ " Click="PresionarBoton" />
-        <Button Grid.Row="3" Grid.Column="0" Margin ="0 0 5 0" FontSize="30" Content="x^" Click="PresionarBoton" />
+          <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0" Grid.Column="0" Margin ="0 0 0 5" Grid.ColumnSpan="5" >
+            <StackPanel  >
+                <Label Name="Historial" FontSize="20" HorizontalContentAlignment="Right"/>
+                <Label Name="Resultado" FontSize="40" HorizontalContentAlignment="Right"/>
+            </StackPanel>
+          </Border>
+        <Button Grid.Row="1" Grid.Column="0" Margin ="0 0 5 0" FontSize="30" Content="√" Click="PresionarBoton" />
+        <Button Grid.Row="2" Grid.Column="0" Margin ="0 0 5 0" FontSize="30" Content="%" Click="PresionarBoton" />
+        <Button Grid.Row="3" Grid.Column="0" Margin ="0 0 5 0" FontSize="30" Content="x²" Click="PresionarBoton" />
         <Button Grid.Row="5" Grid.Column="0" Margin ="0 0 5 0" FontSize="30" Content="log" Click="PresionarBoton" />
 
-        <Button   Grid.Row="1" Grid.Column="1" Margin ="0 0 5 0" FontSize="30" Content="(" Click="PresionarBoton" />
-        <Button Grid.Row="1" Grid.Column="2"  Margin ="0 0 5 0" FontSize="30" Content=")" Click="PresionarBoton" />
-         <Button Grid.Row="1" Grid.Column="3"  Margin ="0 0 5 0" FontSize="30" Content="%" Click="PresionarBoton" />
-          <Button Grid.Row="1" Grid.Column="4"  Margin ="0 0 5 0" FontSize="30" Content="AC" Click="PresionarBoton" />
+        <Button   Grid.Row="1" Grid.Column="1" Margin ="0 0 5 0" FontSize="30" Content="MS" Click="PresionarBoton" />
+        <Button Grid.Row="1" Grid.Column="2"  Margin ="0 0 5 0" FontSize="30" Content="MC" Click="PresionarBoton" />
+         <Button Grid.Row="1" Grid.Column="3"  Margin ="0 0 5 0" FontSize="30" Content="MR" Click="PresionarBoton" />
+          <Button Grid.Row="1" Grid.Column="4"  Margin ="0 0 5 0" FontSize="30" Content="C" Click="PresionarBoton" />
 
         <Button Grid.Row="2" Grid.Column="1" Margin ="0 0 5 0" FontSize="30" Content="7" Click="PresionarBoton" />
         <Button Grid.Row="2" Grid.Column="2"  Margin ="0 0 5 0" FontSize="30" Content="8" Click="PresionarBoton" />
          <Button Grid.Row="2" Grid.Column="3" Margin ="0 0 5 0" FontSize="30" Content="9" Click="PresionarBoton" />
-          <Button Grid.Row="2" Grid.Column="4" Margin ="0 0 5 0" FontSize="30" Content="÷" Click="PresionarBoton" />
+          <Button Grid.Row="2" Grid.Column="4" Margin ="0 0 5 0" FontSize="30" Content="/" Click="PresionarBoton" />
 
         <Button Grid.Row="3" Grid.Column="1" Margin ="0 0 5 0" FontSize="30" Content="4" Click="PresionarBoton" />
         <Button Grid.Row="3" Grid.Column="2" Margin ="0 0 5 0" FontSize="30" Content="5" Click="PresionarBoton" />
          <Button Grid.Row="3" Grid.Column="3" Margin ="0 0 5 0" FontSize="30" Content="6" Click="PresionarBoton" />
-          <Button Grid.Row="3" Grid.Column="4" Margin ="0 0 5 0" FontSize="30" Content="×" Click="PresionarBoton" />
+          <Button Grid.Row="3" Grid.Column="4" Margin ="0 0 5 0" FontSize="30" Content="*" Click="PresionarBoton" />
 
           <Button Grid.Row="4" Grid.Column="1" Margin ="0 0 5 0" FontSize="30" Content="1" Click="PresionarBoton"  />
         <Button Grid.Row="4" Grid.Column="2"  Margin ="0 0 5 0" FontSize="30" Content="2" Click="PresionarBoton" />

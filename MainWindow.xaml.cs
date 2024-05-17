@@ -4,10 +4,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
+using Calculadora.Operadores;
+
 
 namespace Calculadora;
 
@@ -16,38 +20,131 @@ namespace Calculadora;
 /// </summary>
 public partial class MainWindow : Window
 {
-    string concatenado;
-    int Suma =0;
-   
+    private string concatenado;
+    private float total;
+    private IOperador operador;
+    private IDictionary<string, IOperador> operadores;
+    string memoria;
+
     public MainWindow()
     {
         InitializeComponent();
+        operadores = new Dictionary<string, IOperador>();
+        operadores.Add("+", new OperadorSuma());
+        operadores.Add("-", new OperadorResta());
+        operadores.Add("*", new OperadorMultiplicacion());
+        operadores.Add("/", new OperadorDivision());
+        //boton.Click += PresionarBoton;
 
-       //boton.Click += PresionarBoton;
-      
     }
 
 
-    public void PresionarBoton(object sender, RoutedEventArgs e){
+    public void PresionarBoton(object sender, RoutedEventArgs e)
+    {
         //MessageBox.Show("correcto");
-       
-       
+        string contenido = GetContenido(sender);
+
         //MessageBox.Show((sender as Button).Content.ToString());
-        concatenado =(sender as Button).Content.ToString();
-        string a=concatenado;
-        if(concatenado == "+"){
-            Suma = Suma+ int.Parse(a);
-            
-            
+         
+        if (operadores.ContainsKey(contenido))
+        {
+            if (operador == null)
+            {
+                operador = operadores[contenido];
+                if(concatenado == null || concatenado == ""){
+                    operador.A = 0;
+                     Historial.Content =  operador.A;
+                }else{
+                operador.A = float.Parse(concatenado);
+                }
+            }
+            else
+            {
+                operador.B = float.Parse(concatenado);
+                float ATemporal = operador.Ejecutar();
+                operador = operadores[contenido];
+                operador.A= ATemporal;
+            }
+            total = operador.A;
+            ActualizarResultado(contenido);
+        }   
+        else if(contenido == "=" ) {          // 2 + 3 
+               if(operador!=null){
+                operador.B = float.Parse(concatenado);
+                total = operador.Ejecutar();
+                operador = null;
+                Historial.Content =""; 
+                Resultado.Content = total;
+                concatenado= total.ToString();
+               }
+        }
+        else if(contenido == "C"){
+             operador=null;
+            Resultado.Content =0;
+            concatenado= "";
+            Historial.Content="";
+        }
+        else if( contenido == "MS"){
+            memoria = concatenado;
+        }
+        else if( contenido == "MR"){
+            if(memoria == null){
+                memoria="0";
+            }   
+            concatenado = memoria;
+            Resultado.Content=memoria;
+    
+        }
+        else if( contenido == "MC"){
+            memoria ="0";
+            Resultado.Content=memoria;
         }
 
-       // Historial.Content += (sender as Button).Content.ToString();
-        Historial.Content = concatenado;
+        // que se muestre en el historial el numero y el porcentaje //   en resultado me muestre el total
+        else if( contenido == "%"){
+            if(operador is OperadorMultiplicacion){
+                    //MessageBox.Show("hubo multiplicacion"+ concatenado);
+                    var temp = float.Parse(concatenado);
+                   Resultado.Content= (operador.A * float.Parse(concatenado, CultureInfo.InvariantCulture)) / 100;
+                    
+            }
+           
+        }
+        else if(contenido == "√"){
+                float raiz =float.Parse(concatenado);
+                double raiz1 =  Math.Sqrt(raiz);
+                    Resultado.Content=raiz1;
+        }
+        else if(contenido == "log"){
+                float logaritmo =float.Parse(concatenado);
+                double logaritmo2 =  Math.Log10(logaritmo);
+                    Resultado.Content=logaritmo2;
+        }
+         else if(contenido == "x²"){
+                double cuadrado =  Math.Pow(float.Parse(concatenado),2);
+                    Resultado.Content=cuadrado;
+        }
 
-        MessageBox.Show(Suma.ToString());
-        // ↻
-        
+        else
+        {
+            concatenado += contenido;
+            Resultado.Content = concatenado;
+        }
+        // ↻         errores  al poner algun operando se  cierra la aplicacion
     }
 
-    
+        // pendiente
+    public void ActualizarResultado(string contenido)
+    {
+        Historial.Content += concatenado + contenido;
+        Resultado.Content = total;
+        concatenado = "";
+    }
+
+    private string GetContenido(object sender)
+    {
+        return (sender as Button).Content.ToString();
+    }
+
+
 }
