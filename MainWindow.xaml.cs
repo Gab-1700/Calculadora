@@ -25,6 +25,7 @@ public partial class MainWindow : Window
     private IOperador operador;
     private IDictionary<string, IOperador> operadores;
     string memoria;
+    float temporal;
 
     public MainWindow()
     {
@@ -54,18 +55,27 @@ public partial class MainWindow : Window
                 if(concatenado == null || concatenado == ""){
                     operador.A = 0;
                      Historial.Content =  operador.A;
+                     //temporal=operador.A;       // opcional
                 }else{
                 operador.A = float.Parse(concatenado);
                 }
             }
             else
             {
-                operador.B = float.Parse(concatenado);
-                float ATemporal = operador.Ejecutar();
-                operador = operadores[contenido];
-                operador.A= ATemporal;
+             if(concatenado ==""){ 
+                    temporal = operador.A;
+                    operador = operadores[contenido];                                 // sobree escribir al nuevo operador su izquiera
+                    operador.A= temporal;
+                    Historial.Content = temporal;
+                    
+             }else{
+                    operador.B = float.Parse(concatenado); 
+                    float ATemporal = operador.Ejecutar();
+                    operador = operadores[contenido];
+                    operador.A= ATemporal;
+                 }
             }
-            total = operador.A;
+            total = operador.A; //operador.A;
             ActualizarResultado(contenido);
         }   
         else if(contenido == "=" ) {          // 2 + 3 
@@ -106,7 +116,6 @@ public partial class MainWindow : Window
                     //MessageBox.Show("hubo multiplicacion"+ concatenado);
                     var temp = float.Parse(concatenado);
                    Resultado.Content= (operador.A * float.Parse(concatenado, CultureInfo.InvariantCulture)) / 100;
-                    
             }
            
         }
@@ -123,6 +132,10 @@ public partial class MainWindow : Window
          else if(contenido == "x²"){
                 double cuadrado =  Math.Pow(float.Parse(concatenado),2);
                     Resultado.Content=cuadrado;
+        }
+         else if(contenido == "x³"){
+                double cubo =  Math.Pow(float.Parse(concatenado),3);
+                    Resultado.Content=cubo;
         }
 
         else
